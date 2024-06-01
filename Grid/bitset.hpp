@@ -14,9 +14,9 @@ struct Bitref {
     size_t pos;
 
   public:
-	Bitref(ull& n, size_t p) : ptr(&n), pos(p) {}
+    Bitref(ull& n, size_t p) : ptr(&n), pos(p) {}
 
-	Bitref& operator = (bool f) {
+    Bitref& operator = (bool f) {
         if (f) {
             *(this->ptr) |= (ull)1 << this->pos;
         } else {
