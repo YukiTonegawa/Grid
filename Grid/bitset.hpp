@@ -17,26 +17,26 @@ struct Bitref {
 	Bitref(ull& n, size_t p) : ptr(&n), pos(p) {}
 
 	Bitref& operator = (bool f) {
-		if (f) {
-			*(this->ptr) |= (ull)1 << this->pos;
+        if (f) {
+            *(this->ptr) |= (ull)1 << this->pos;
         } else {
-			*(this->ptr) &= ~((ull)1 << this->pos);
+            *(this->ptr) &= ~((ull)1 << this->pos);
         }
-		return *this;
-	}
+        return *this;
+    }
 
-	Bitref& operator = (Bitref& ref) {
-		if (*(ref.ptr) & (ull)1 << ref.pos) {
-			*(this->ptr) |= (ull)1 << this->pos;
+    Bitref& operator = (Bitref& ref) {
+        if (*(ref.ptr) & (ull)1 << ref.pos) {
+            *(this->ptr) |= (ull)1 << this->pos;
         } else {
-			*(this->ptr) &= ~((ull)1 << this->pos);
+            *(this->ptr) &= ~((ull)1 << this->pos);
         }
-		return *this;
-	}
-
-	operator bool() const {
-		return *(this->ptr) & ((ull)1 << this->pos);
-	}
+        return *this;
+    }
+    
+    operator bool() const {
+        return *(this->ptr) & ((ull)1 << this->pos);
+    }
 };
  
 struct Bitset {
@@ -149,7 +149,7 @@ struct BitsetRangeref {
     Bitset *ptr;
     size_t l;
   public:
-	BitsetRangeref(Bitset& bs, size_t p) : ptr(&bs), l(p) {}
+    BitsetRangeref(Bitset& bs, size_t p) : ptr(&bs), l(p) {}
     Bitref operator [](size_t i) { return (*ptr)[l + i]; }
 };
 #endif
