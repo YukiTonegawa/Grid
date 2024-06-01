@@ -10,8 +10,8 @@
 struct Bitref {
   private:
     using ull = uint64_t;
-	uint64_t *ptr;
-	size_t pos;
+    uint64_t *ptr;
+    size_t pos;
 
   public:
 	Bitref(ull& n, size_t p) : ptr(&n), pos(p) {}
@@ -147,7 +147,7 @@ struct Bitset {
 struct BitsetRangeref {
   private:
     Bitset *ptr;
-	size_t l;
+    size_t l;
   public:
 	BitsetRangeref(Bitset& bs, size_t p) : ptr(&bs), l(p) {}
     Bitref operator [](size_t i) { return (*ptr)[l + i]; }
