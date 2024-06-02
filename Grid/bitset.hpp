@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cassert>
+#include <bitset>
 #include "bitoperation.hpp"
 
 // operator [] でビットごとの参照を得るためのプロクシクラス
@@ -44,12 +45,11 @@ struct Bitset {
     using ull = uint64_t;
     static constexpr size_t BITLEN = 64;
     static constexpr size_t SHIFTDIV = 6; // (x >> SHIFTDIV) = x / BITLEN
-    
+
     size_t N;
     std::vector<ull> _bit;
-
+    
   public:
-
     // _N要素のf
     Bitset(size_t _N, bool f = false) : N(_N), _bit((N + BITLEN - 1) >> SHIFTDIV, (f ? ~ull(0) : ull(0))) {}
     
@@ -99,6 +99,7 @@ struct Bitset {
         }
         return -1;
     }
+
     // i以降(iを含む)に現れる最も左のfの位置 存在しない場合は-1
     // O(N / w)
     int next(int i, const bool f) const {
@@ -151,5 +152,16 @@ struct BitsetRangeref {
   public:
     BitsetRangeref(Bitset& bs, size_t p) : ptr(&bs), l(p) {}
     Bitref operator [](size_t i) { return (*ptr)[l + i]; }
+};
+
+// H行W列のグリッド -> 長さHWのstd::bitsetに変換した時に行への参照を取得するためのクラス
+template<size_t N>
+struct bitsetRangeref {
+  private:
+    std::bitset<N> *ptr;
+    size_t l;
+  public:
+    bitsetRangeref(std::bitset<N>& bs, size_t p) : ptr(&bs), l(p) {}
+    typename std::bitset<N>::reference operator [](size_t i) { return (*ptr)[l + i]; }
 };
 #endif
