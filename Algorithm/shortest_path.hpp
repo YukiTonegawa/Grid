@@ -39,7 +39,7 @@ struct shortest_path_bfs {
         }
     }
 
-    // {tx, ty}への最短距離 到達不可能な場合はinf O(1)
+    // tへの最短距離 到達不可能な場合はinf O(1)
     int dist(Point t) {
         assert(0 <= t.x && t.x < H);
         assert(0 <= t.y && t.y < W);
@@ -64,7 +64,7 @@ struct shortest_path_bfs {
     }
 };
 
-// 辺の重みを指定する get_dist(x, y, d) := {x, y}から方向dへの距離を取得する関数
+// 辺の重みを指定する get_dist(p, d) := pから方向dへの距離を取得する関数
 // O(N)
 template<typename Point, typename Dist>
 struct shortest_path_dijkstra {
@@ -73,7 +73,7 @@ struct shortest_path_dijkstra {
     std::vector<int> hist;
   
   public:
-    static constexpr int inf = 1 << 30;
+    static constexpr Dist inf = std::numeric_limits<Dist>() / 2;
     int H, W;
 
     void build(Grid<Point> &g, Point s, std::function<Dist(Point, int)> get_dist) {
@@ -111,7 +111,7 @@ struct shortest_path_dijkstra {
 
     }
 
-    // {tx, ty}への最短距離 到達不可能な場合はinf O(1)
+    // tへの最短距離 到達不可能な場合はinf O(1)
     Dist dist(Point t) {
         assert(0 <= t.x && t.x < H);
         assert(0 <= t.y && t.y < W);
@@ -135,7 +135,5 @@ struct shortest_path_dijkstra {
         return res;
     }
 };
-
-
 
 #endif
