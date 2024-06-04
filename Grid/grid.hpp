@@ -7,11 +7,12 @@ template<typename Point>
 struct Grid {
 private:
     Bitset _bit;
+    
 public:
     int H, W;
 
     Grid (int _H, int _W) : _bit(_H * _W), H(_H), W(_W) {
-        Point::set(H, W);
+        Point::set_grid_size(H, W);
     }
 
     Point move(Point p, int d) {

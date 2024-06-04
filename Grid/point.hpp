@@ -38,6 +38,8 @@ struct PointDir4 {
     PointDir4 move_inv(int d) {
         return move(K - 1 - d);
     }
+    
+    bool operator == (const PointDir4 &p) const { return x == p.x && y == p.y; }
 };
 
 template<int id>
@@ -75,6 +77,8 @@ struct PointDir8{
     PointDir8 move_inv(int d) {
         return move(K - 1 - d);
     }
+
+    bool operator == (const PointDir8 &p) const { return x == p.x && y == p.y; }
 };
 
 template<int id>
@@ -113,6 +117,8 @@ struct PointDir4torus {
     PointDir4torus move_inv(int d) {
         return move(K - 1 - d);
     }
+
+    bool operator == (const PointDir4torus &p) const { return x == p.x && y == p.y; }
 };
 
 template<int id>
@@ -151,5 +157,28 @@ struct PointDir8torus {
     PointDir8torus move_inv(int d) {
         return move(K - 1 - d);
     }
+
+    bool operator == (const PointDir8torus &p) const { return x == p.x && y == p.y; }
 };
+
+
+template<int id>
+size_t PointDir4<id>::H = 0;
+template<int id>
+size_t PointDir4<id>::W = 0;
+
+template<int id>
+size_t PointDir8<id>::H = 0;
+template<int id>
+size_t PointDir8<id>::W = 0;
+
+template<int id>
+size_t PointDir4torus<id>::H = 0;
+template<int id>
+size_t PointDir4torus<id>::W = 0;
+
+template<int id>
+size_t PointDir8torus<id>::H = 0;
+template<int id>
+size_t PointDir8torus<id>::W = 0;
 #endif

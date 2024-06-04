@@ -5,6 +5,7 @@
 #include <array>
 #include <numeric>
 #include <algorithm>
+#include <unordered_set>
 #include "../Grid/grid.hpp"
 #include "../Random/random.hpp"
 
@@ -18,7 +19,7 @@
 // 長さ1以上のパスが存在しない場合空の配列を返す
 template<typename Point>
 std::vector<int> random_path(Grid<Point> &g, Point s, Point t) {
-    static std::bitset<1000000> used(0); // 訪れた頂点
+    std::unordered_set<int> used;
     std::vector<int> res;
     bool ok = false;
 
@@ -26,29 +27,24 @@ std::vector<int> random_path(Grid<Point> &g, Point s, Point t) {
     std::iota(idx.begin(), idx.end(), 0);
 
     auto dfs = [&](auto &&dfs, Point p) -> void {
-        used[p.x * g.W + p.y] = 1;
+        used.insert(p.x * g.W + p.y);
         std::shuffle(idx.begin(), idx.end(), rng.mt);
 
         for (int i = 0; i < Point::K && !ok; i++) {
             Point q = g.move(p, idx[i]);
-            if (q.x == -1 || used[q.x * g.W + q.y]) continue;
+            
+            if (q.x == -1 || used.find(q.x * g.W + q.y) != used.end()) continue;
             res.push_back(idx[i]);
-            if (q.x == t.x && q.y == t.y) {
+            if (q == t) {
                 ok = true;
                 return;
             }
             dfs(dfs, q);
             if (!ok) res.pop_back();
         }
-        used[p.x * g.W + p.y] = 0;
     };
 
     dfs(dfs, s);
-    // usedを初期化
-    for (int d : res) {
-        used[s.x * g.W + s.y] = 0;
-        s = g.move(s, d);
-    }
     return res;
 }
 
